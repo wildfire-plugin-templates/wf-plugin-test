@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wildfire Plugin - Wilddog</title>
+  <link rel="stylesheet" type="text/css" href="../../wildfire/dist/wilddog/static/wildfire.css">
+  <style type="text/css">
+    #app {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <p>Change to <a href="firebase.html">Firebase</a></p>
+  <div id="app">
+    <wildfire :key="resetKey"></wildfire>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+  <script src="https://cdn.wilddog.com/sdk/js/2.5.17/wilddog.js"></script>
+  <script src="../../wildfire/dist/wilddog/wildfire.min.js"></script>
+  <!-- <script src="https://unpkg.com/wildfire/dist/wilddog/wildfire.min.js"></script> -->
+
+  <!-- <script src="../dist/wf-plugin-test.min.js"></script> -->
+  <script type="text/javascript">
+    const pluginName = 'wf-plugin-test'
+
+    wildfire.default.install(Vue, {
+      databaseProvider: 'wilddog',
+      databaseConfig: {
+        siteId: 'wd5350450577zvbtov'
+      },
+      pageURL: `http://wildfire.js.org/${pluginName}`,
+      pageTitle: 'Wildfire Plugin',
+      theme: 'light',
+      // theme: 'dark',
+      // defaultAvatarURL: 'https://image.flaticon.com/icons/svg/621/621863.svg'
+      // locale: 'en'
+      locale: 'zh-CN',
+
+      // 手动添加插件
+      plugins: [{
+        name: 'WildfirePluginTest',
+        source: '../dist/wf-plugin-test.min.js',
+        description: ''
+      },{
+        name: 'WildfirePluginTest2',
+        source: '../dist/wf-plugin-test.min.js',
+        description: ''
+      }]
+    })
+    var app = new Vue({
+      el: '#app',
+      data () {
+        return {
+          resetKey: 0
+        }
+      },
+      mounted () {
+        window.$_wildfire_reset = (config) => {
+          wildfire.reset(Vue, {
+            pageURL: 'http://wildfire.js.org/dev-reset-test',
+            pageTitle: 'Reset!!!',
+            locale: 'en'
+          })
+          this.resetKey += 1
+        }
+      }
+    })
+  </script>
+</body>
+</html>
